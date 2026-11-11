@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#103d2b">
+<title>Halal Finder Japan — Complete</title>
+<style>
+:root{--green:#103d2b;--green2:#18563d;--gold:#d8b45c;--cream:#f7f5ed;--paper:#fffefa;--ink:#18251e;--muted:#718078;--line:#e8e6dc;--danger:#9c3d36;--ok:#2d754f;--shadow:0 12px 34px #173b2814}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.topbar{height:68px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(14px,calc((100vw - 1120px)/2));position:sticky;top:0;z-index:10;box-shadow:0 4px 20px #0002}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}.logo{width:38px;height:38px;border:1px solid #d8b45c88;border-radius:13px;display:grid;place-items:center;color:var(--gold);font-size:21px}.brand small{display:block;font-weight:500;color:#d5dfd8;font-size:10px;letter-spacing:1.5px;margin-top:2px}
+.top-actions{display:flex;gap:8px}.top-btn{background:#ffffff14;color:#fff;border:1px solid #ffffff30;border-radius:11px;padding:9px 11px}
+.wrap{max-width:1120px;margin:auto;padding:20px 14px 105px}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#103d2b,#1b6044);border-radius:25px;padding:28px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}.hero:after{content:"۞";position:absolute;right:5%;top:-46px;font-size:220px;color:#ffffff0c;pointer-events:none}.eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-family:Georgia,serif;font-size:clamp(29px,5vw,44px);line-height:1.12;margin:12px 0}.hero p{color:#d9e5dc;max-width:560px;line-height:1.6;margin:0 0 20px}.hero-art{position:absolute;right:9%;bottom:15px;font-size:85px;opacity:.18}
+.gold-btn{background:var(--gold);color:#183625;border:0;border-radius:12px;padding:12px 17px;font-weight:800}.primary{border:0;background:var(--green);color:#fff;padding:12px 16px;border-radius:12px;font-weight:750}.secondary{border:1px solid var(--line);background:#fff;color:var(--green);padding:11px 14px;border-radius:12px;font-weight:700}.danger{border:1px solid #e4c5c2;background:#fff;color:var(--danger);padding:10px 13px;border-radius:11px;font-weight:700}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin:28px 2px 14px}.section-head h2{font-size:19px;margin:0}.section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tile{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:17px 13px;text-align:left;box-shadow:0 3px 12px #173b2808;min-height:118px;color:var(--ink);transition:.18s}.tile:active{transform:scale(.98)}.tile .ico{width:42px;height:42px;border-radius:14px;background:#eaf1e9;display:grid;place-items:center;font-size:22px;margin-bottom:11px}.tile b{display:block;font-size:13px}.tile span:last-child{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.status-card{margin-top:20px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:17px;display:flex;gap:13px;align-items:center}.status-icon{width:43px;height:43px;background:#f5edda;color:#87651d;border-radius:14px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.page-title{font-family:Georgia,serif;font-size:31px;margin:5px 0}.sub{color:var(--muted);line-height:1.6;margin:0 0 22px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:19px;padding:19px;margin:13px 0;box-shadow:0 3px 12px #173b2808}.panel h3{margin:0 0 7px;font-size:16px}.panel p{color:var(--muted);font-size:13px;line-height:1.55}
+.big-icon{font-size:38px;margin-bottom:10px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.search{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:14px;margin:8px 0 12px}.notice{background:#f5edda;border:1px solid #eadbb5;border-radius:13px;padding:13px;color:#71551d;font-size:12px;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:750;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff}.field.full{grid-column:1/-1}
+.result{border:1px solid var(--line);border-radius:15px;background:#fff;padding:15px;margin-top:10px}.result b{display:block}.pill{display:inline-block;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;margin-top:8px}.halal{background:#e4f1e7;color:#24613f}.unknown{background:#f5edda;color:#76591c}.haram{background:#f7e4e2;color:#87362f}
+.list{display:grid;gap:10px}.list-item{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);border-radius:15px;background:#fff;padding:13px}.list-item .left{display:flex;gap:12px;align-items:center}.thumb{width:48px;height:48px;border-radius:12px;background:#eaf1e9;display:grid;place-items:center;font-size:22px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.meta{font-size:11px;color:var(--muted);margin-top:3px}
+.camera-wrap{background:#0c2017;border-radius:18px;overflow:hidden;position:relative}.camera-wrap video{width:100%;display:block;min-height:250px;max-height:58vh;object-fit:cover}.scan-frame{position:absolute;left:15%;right:15%;top:27%;height:46%;border:3px solid var(--gold);border-radius:18px;box-shadow:0 0 0 999px #0004}.camera-note{padding:10px;color:#dfe9e2;background:#102b20;font-size:11px}.scan-status{font-size:12px;color:var(--muted);margin:10px 0}.map-card{min-height:180px;border-radius:16px;background:linear-gradient(135deg,#eaf1e9,#f5edda);display:grid;place-items:center;text-align:center;padding:20px}.map-card .big-icon{margin:0}.place-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.times{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.time{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.time b{display:block;font-size:12px}.time span{display:block;font-size:16px;font-weight:800;color:var(--green);margin-top:5px}
+.quran-card{padding:20px;border-radius:17px;background:linear-gradient(135deg,#103d2b,#1b6044);color:#fff;text-align:center}.ayah{font-family:Georgia,serif;font-size:24px;line-height:2.1;direction:rtl}.translation{color:#d9e5dc;font-size:13px;line-height:1.7;margin-top:12px}
+.counter{font-size:52px;font-weight:850;color:var(--green);text-align:center;margin:12px}.counter-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.empty{text-align:center;padding:30px 12px;color:var(--muted)}footer{text-align:center;color:#8a958e;font-size:11px;padding:30px 0 5px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fffefaed;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:9}.nav{width:min(650px,100%);display:flex;justify-content:space-around;padding:9px 5px calc(9px + env(safe-area-inset-bottom))}.nav button{border:0;background:none;color:#7b887f;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;min-width:55px}.nav button strong{font-size:19px;font-weight:500}.nav button.active{color:var(--green);font-weight:800}.nav button.active strong{color:var(--gold)}
+.modal-back{position:fixed;inset:0;background:#07170f99;display:none;align-items:center;justify-content:center;padding:20px;z-index:30}.modal-back.show{display:flex}.modal{background:var(--paper);border-radius:20px;padding:22px;width:min(450px,100%);box-shadow:var(--shadow)}.modal h3{margin-top:0}.modal select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff;margin:8px 0 15px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.times{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:701px){.field.full{grid-column:1/-1}}
+
+.icon-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;color:var(--green);font-weight:750}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar .search{flex:1;min-width:180px;margin:0}
+.small{font-size:11px;color:var(--muted)}
+.link-btn{border:0;background:none;color:var(--green);font-weight:800;padding:0}
+.detail-grid{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start}
+.product-photo{width:120px;height:120px;border-radius:18px;background:#eaf1e9;display:grid;place-items:center;font-size:48px;overflow:hidden}
+.product-photo img{width:100%;height:100%;object-fit:cover}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:8px;font-size:12px}
+.kv b{color:var(--muted)}
+.favorite{font-size:20px}
+.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:var(--green);color:#fff;padding:10px 15px;border-radius:999px;font-size:12px;z-index:60;box-shadow:var(--shadow);display:none}
+.toast.show{display:block}
+@media(max-width:420px){.detail-grid{grid-template-columns:1fr}.product-photo{width:100%;height:180px}.kv{grid-template-columns:95px 1fr}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="brand"><div class="logo">☪</div><div>Halal Finder Japan<small>YOUR HALAL COMPANION</small></div></div>
+ <div class="top-actions"><button class="top-btn" onclick="openLanguage()">文 A</button><button class="top-btn" onclick="showPage('profile')">☻</button></div>
+</header>
+
+<main class="wrap">
+<section id="home" class="page active">
+ <div class="hero">
+  <div class="eyebrow">WELCOME TO YOUR HALAL JOURNEY</div>
+  <h1>Explore Japan with confidence.</h1>
+  <p>Find halal products, discover welcoming places, check prayer times, save useful items and keep your everyday essentials together.</p>
+  <button class="gold-btn" onclick="showPage('scanner')">Scan a product →</button>
+  <div class="hero-art">۞</div>
+ </div>
+ <div class="section-head"><div><h2>Explore</h2><p>Everything you need, in one place</p></div></div>
+ <div class="grid">
+  <button class="tile" onclick="showPage('scanner')"><span class="ico">▦</span><b>Barcode scanner</b><span>Scan a product</span></button>
+  <button class="tile" onclick="showPage('products')"><span class="ico">⌕</span><b>Halal products</b><span>Search products</span></button>
+  <button class="tile" onclick="showPage('places')"><span class="ico">⌖</span><b>Halal places</b><span>Restaurants & shops</span></button>
+  <button class="tile" onclick="showPage('mosques')"><span class="ico">🕌</span><b>Mosques</b><span>Find prayer spaces</span></button>
+  <button class="tile" onclick="showPage('prayer')"><span class="ico">◷</span><b>Prayer times</b><span>Daily schedule</span></button>
+  <button class="tile" onclick="showPage('quran')"><span class="ico">۞</span><b>Quran</b><span>Read and reflect</span></button>
+  <button class="tile" onclick="showPage('azkar')"><span class="ico">✿</span><b>Azkar & Tasbih</b><span>Daily remembrance</span></button>
+  <button class="tile" onclick="showPage('saved')"><span class="ico">♡</span><b>Saved items</b><span>Your favourites</span></button>
+ </div>
+ <div class="status-card"><div class="status-icon">✓</div><div><b>Clear, careful halal information</b><p>Halal status will be shown from database evidence. A barcode alone never proves halal status.</p></div></div>
+</section>
+
+<section id="scanner" class="page">
+ <h1 class="page-title">Barcode scanner</h1><p class="sub">Use your phone camera to read a product barcode, then search our product database.</p>
+ <div class="panel">
+  <div class="camera-wrap"><video id="video" playsinline muted></video><div class="scan-frame"></div><div class="camera-note" id="cameraNote">Camera permission is required.</div></div>
+  <div class="scan-status" id="scanStatus">Scanner is ready to start.</div>
+  <div class="row"><button class="primary" id="startCameraBtn" onclick="startScanner()">▣ Start camera</button><button class="secondary" onclick="stopScanner()">Stop</button></div>
+  <div class="notice" style="margin-top:12px">If your browser does not support native barcode detection, use manual barcode entry below. Later, the same field will query the Firebase product database.</div>
+  <input class="search" id="barcodeInput" inputmode="numeric" placeholder="Enter barcode manually…" onkeydown="if(event.key==='Enter')lookupBarcode()">
+  <button class="primary" onclick="lookupBarcode()">Search barcode</button>
+  <div id="barcodeResult"></div>
+ </div>
+</section>
+
+<section id="products" class="page">
+ <h1 class="page-title">Halal products</h1><p class="sub">Search products stored in your Firebase database.</p>
+ <input class="search" id="productSearch" placeholder="Search name, brand or barcode…" oninput="renderProducts(this.value)">
+ <div id="productList" class="list"></div>
+</section>
+
+<section id="places" class="page">
+ <h1 class="page-title">Halal places</h1><p class="sub">Search places around Japan. The map button opens a map search centered on your current location when permission is available.</p>
+ <input class="search" id="placeSearch" placeholder="Search city or place type…" oninput="renderPlaces(this.value)">
+ <div class="panel">
+  <div class="map-card"><div><div class="big-icon">⌖</div><b id="locationText">Location not selected</b><p>Use your location to make nearby searches more useful.</p><button class="primary" onclick="getLocation()">Use my location</button></div></div>
+ </div>
+ <div id="placeList" class="list"></div>
+</section>
+
+<section id="mosques" class="page">
+ <h1 class="page-title">Mosques & prayer spaces</h1><p class="sub">Open a map search for mosques near your current area.</p>
+ <div class="panel"><div class="map-card"><div><div class="big-icon">🕌</div><b>Find a mosque near me</b><p>Location permission lets the map search use your current area.</p><button class="primary" onclick="findNearby('mosque')">Open mosque map</button></div></div></div>
+ <div class="panel"><h3>Japan mosque search</h3><p>Try Tokyo, Osaka, Kyoto, Nagoya, Fukuoka or another city.</p><input class="search" id="mosqueCity" placeholder="Enter city"><button class="secondary" onclick="openMapSearch('mosqueCity')">Search mosque</button></div>
+</section>
+
+<section id="prayer" class="page">
+ <h1 class="page-title">Prayer times</h1><p class="sub">Choose a city and load today's prayer schedule.</p>
+ <div class="panel">
+  <div class="form-grid">
+   <div class="field"><label>City</label><input id="prayerCity" value="Tokyo"></div>
+   <div class="field"><label>Country</label><input id="prayerCountry" value="Japan"></div>
+  </div>
+  <div class="row" style="margin-top:12px"><button class="primary" onclick="loadPrayerTimes()">Load today's times</button><button class="secondary" onclick="setPrayerLocation()">Use my location</button></div>
+  <div id="prayerStatus" class="scan-status"></div>
+ </div>
+ <div id="prayerTimes" class="times"></div>
+ <div class="notice" style="margin-top:14px">Prayer calculations can differ by method and local mosque. This screen is a convenience feature, not a religious ruling.</div>
+</section>
+
+<section id="quran" class="page">
+ <h1 class="page-title">Quran</h1>
+ <p class="sub">Choose a surah to read. The built-in examples work offline; the full Quran can be opened online.</p>
+ <div class="panel">
+  <div class="toolbar">
+   <select id="surahSelect" class="search" style="margin:0" onchange="loadSurah(this.value)">
+    <option value="1">1 — Al-Fatihah</option>
+    <option value="94">94 — Ash-Sharh</option>
+    <option value="112">112 — Al-Ikhlas</option>
+    <option value="113">113 — Al-Falaq</option>
+    <option value="114">114 — An-Nas</option>
+   </select>
+  </div>
+  <div id="quranReader"></div>
+ </div>
+ <div class="panel">
+  <h3>Quran tools</h3>
+  <div class="row">
+   <button class="secondary" onclick="saveCurrentSurah()">♡ Save current surah</button>
+   <button class="secondary" onclick="openFullQuran()">Open full Quran ↗</button>
+  </div>
+  <p class="small">The full library is opened from an external Quran reading service rather than copied into this app.</p>
+ </div>
+</section>
+
+<section id="azkar" class="page">
+ <h1 class="page-title">Azkar & Tasbih</h1><p class="sub">Your simple offline counter is saved on this device.</p>
+ <div class="panel">
+  <div id="count" class="counter">0</div>
+  <div class="counter-buttons"><button class="primary" onclick="increment()">Count +1</button><button class="secondary" onclick="resetCount()">Reset</button></div>
+ </div>
+ <div class="panel"><h3>Quick azkar</h3><div class="list" id="azkarList"></div></div>
+</section>
+
+<section id="saved" class="page">
+ <h1 class="page-title">Saved items</h1><p class="sub">Saved items are stored in your browser on this device. Later we can sync them to user accounts.</p>
+ <div id="savedList" class="list"></div>
+ <div id="savedEmpty" class="empty">Nothing saved yet. Tap ♡ on a product, place or Quran item.</div>
+</section>
+
+<section id="profile" class="page">
+ <h1 class="page-title">Settings</h1><p class="sub">Personalise Halal Finder Japan.</p>
+ <div class="panel"><h3>Language / 言語 / ژبه / اللغة</h3><p>Choose your preferred app language.</p><button class="secondary" onclick="openLanguage()">Change language</button></div>
+ <div class="panel"><h3>Data</h3><p>Your current saved items and Tasbih count are stored locally. Firebase sync will be added after the public app is connected to the database.</p><button class="danger" onclick="clearLocalData()">Clear local saved data</button></div>
+ <div class="panel"><h3>About</h3><p>Halal Finder Japan — public app. Product halal status will be clearly labelled as Halal, Haram or Unknown based on available evidence.</p></div>
+<div class="panel" style="margin-top:14px">
+      <h3>Firebase</h3>
+      <p class="small">Connected project: halal-japan-2c083</p>
+      <div id="firebaseStatus" class="small">Not tested yet.</div>
+      <button class="secondary" style="margin-top:10px" onclick="testFirebaseConnection()">Test Firebase connection</button>
+    </div></section>
+<footer>Halal Finder Japan · Firebase-connected front-end · Admin Panel is the next stage</footer>
+</main>
+
+<div class="bottom"><nav class="nav">
+ <button class="active" data-page="home" onclick="showPage('home')"><strong>⌂</strong><span>Home</span></button>
+ <button data-page="scanner" onclick="showPage('scanner')"><strong>▦</strong><span>Scan</span></button>
+ <button data-page="places" onclick="showPage('places')"><strong>⌖</strong><span>Places</span></button>
+ <button data-page="prayer" onclick="showPage('prayer')"><strong>◷</strong><span>Prayer</span></button>
+ <button data-page="saved" onclick="showPage('saved')"><strong>♡</strong><span>Saved</span></button>
+</nav></div>
+
+<div class="modal-back" id="languageModal" onclick="if(event.target===this)closeLanguage()">
+<div class="modal"><h3>Choose language</h3><p class="sub">Select your preferred language.</p>
+<select id="languageSelect" onchange="setLanguage(this.value)"><option value="en">English</option><option value="ja">日本語</option><option value="ps">پښتو</option><option value="ar">العربية</option></select>
+<button class="primary" onclick="closeLanguage()">Done</button></div></div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyD-zXniypb7EDenQrkSFrGf-2tXiWGdE",
+  authDomain: "halal-japan-2c083.firebaseapp.com",
+  projectId: "halal-japan-2c083",
+  storageBucket: "halal-japan-2c083.firebasestorage.app",
+  messagingSenderId: "969960442812",
+  appId: "1:969960442812:web:3e31edd769032dc71779b9",
+  measurementId: "G-86PQ9TSX5R"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
+
+<script>
+const demoProducts = [
+ {barcode:"4901234567890",name:"Demo Chocolate",brand:"Demo Brand",category:"Snack",status:"unknown",ingredients:"Sample ingredients — replace with verified database data.",icon:"🍫"},
+ {barcode:"4909876543210",name:"Demo Snack",brand:"Demo Japan",category:"Snack",status:"unknown",ingredients:"Sample ingredients — replace with verified database data.",icon:"🍪"},
+ {barcode:"4901111222233",name:"Demo Green Tea",brand:"Japan Demo",category:"Drink",status:"unknown",ingredients:"Sample ingredients — replace with verified database data.",icon:"🍵"}
+];
+
+const places = [
+ {name:"Halal restaurant",type:"Restaurant",query:"halal restaurant Japan",icon:"🍽️"},
+ {name:"Halal grocery",type:"Grocery",query:"halal grocery Japan",icon:"🛒"},
+ {name:"Muslim-friendly restaurant",type:"Restaurant",query:"muslim friendly restaurant Japan",icon:"🥘"},
+ {name:"Halal ramen",type:"Restaurant",query:"halal ramen Japan",icon:"🍜"}
+];
+
+const surahs = {
+ "1": {
+   name:"Al-Fatihah", number:1,
+   verses:[
+    ["بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ","In the name of Allah, the Most Compassionate, the Most Merciful."],
+    ["الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ","All praise is for Allah, Lord of the worlds."],
+    ["الرَّحْمَٰنِ الرَّحِيمِ","The Most Compassionate, Most Merciful."],
+    ["مَالِكِ يَوْمِ الدِّينِ","Master of the Day of Judgment."],
+    ["إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ","You alone we worship and You alone we ask for help."],
+    ["اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ","Guide us along the Straight Path."],
+    ["صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ","The path of those You have blessed—not those You are displeased with, or those who are astray."]
+   ]
+ },
+ "94": {
+   name:"Ash-Sharh", number:94,
+   verses:[
+    ["أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ","Did We not relieve your heart for you?"],
+    ["وَوَضَعْنَا عَنكَ وِزْرَكَ","And remove from you your burden,"],
+    ["الَّذِي أَنقَضَ ظَهْرَكَ","which weighed heavily on your back,"],
+    ["وَرَفَعْنَا لَكَ ذِكْرَكَ","and elevate your mention?"],
+    ["فَإِنَّ مَعَ الْعُسْرِ يُسْرًا","So, surely with hardship comes ease."],
+    ["إِنَّ مَعَ الْعُسْرِ يُسْرًا","Surely with hardship comes ease."],
+    ["فَإِذَا فَرَغْتَ فَانصَبْ","So once you have fulfilled your duty, strive in devotion,"],
+    ["وَإِلَىٰ رَبِّكَ فَارْغَب","turning to your Lord alone with hope."]
+   ]
+ },
+ "112": {
+   name:"Al-Ikhlas", number:112,
+   verses:[
+    ["قُلْ هُوَ اللَّهُ أَحَدٌ","Say, He is Allah—One."],
+    ["اللَّهُ الصَّمَدُ","Allah—the Sustainer needed by all."],
+    ["لَمْ يَلِدْ وَلَمْ يُولَدْ","He has never had offspring, nor was He born."],
+    ["وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ","And there is none comparable to Him."]
+   ]
+ },
+ "113": {
+   name:"Al-Falaq", number:113,
+   verses:[
+    ["قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ","Say, I seek refuge in the Lord of the daybreak,"],
+    ["مِن شَرِّ مَا خَلَقَ","from the evil of what He created,"],
+    ["وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","and from the evil of the night when it falls,"],
+    ["وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ","and from the evil of those who blow on knots,"],
+    ["وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ","and from the evil of an envier when they envy."]
+   ]
+ },
+ "114": {
+   name:"An-Nas", number:114,
+   verses:[
+    ["قُلْ أَعُوذُ بِرَبِّ النَّاسِ","Say, I seek refuge in the Lord of humankind,"],
+    ["مَلِكِ النَّاسِ","the King of humankind,"],
+    ["إِلَٰهِ النَّاسِ","the God of humankind,"],
+    ["مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ","from the evil of the lurking whisperer,"],
+    ["الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ","who whispers into the hearts of humankind,"],
+    ["مِنَ الْجِنَّةِ وَالنَّاسِ","from among jinn and humankind."]
+   ]
+ }
+};
+
+const translations = {
+ en:{home:"Home",scan:"Scan",places:"Places",prayer:"Prayer",saved:"Saved"},
+ ja:{home:"ホーム",scan:"スキャン",places:"場所",prayer:"礼拝",saved:"保存"},
+ ps:{home:"کور",scan:"سکین",places:"ځایونه",prayer:"لمونځ",saved:"خوندي"},
+ ar:{home:"الرئيسية",scan:"مسح",places:"الأماكن",prayer:"الصلاة",saved:"المحفوظات"}
+};
+
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ if(id==="saved") renderSaved();
+ if(id==="products") renderProducts(document.getElementById("productSearch")?.value||"");
+ if(id==="places") renderPlaces(document.getElementById("placeSearch")?.value||"");
+ if(id==="quran") loadSurah(document.getElementById("surahSelect")?.value||"1");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+let scannerStream=null, barcodeDetector=null, scanning=false;
+
+async function startScanner(){
+ const video=document.getElementById("video"), status=document.getElementById("scanStatus");
+ if(!navigator.mediaDevices?.getUserMedia){
+   status.textContent="Camera is not available in this browser. Use manual barcode entry below.";
+   return;
+ }
+ try{
+  scannerStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
+  video.srcObject=scannerStream; await video.play();
+  status.textContent="Camera running. Point the barcode inside the frame.";
+  document.getElementById("cameraNote").textContent="Camera active — searching for a barcode.";
+  if("BarcodeDetector" in window){
+   const supported=await BarcodeDetector.getSupportedFormats().catch(()=>[]);
+   const wanted=["ean_13","ean_8","upc_a","upc_e","code_128","code_39","itf","qr_code"];
+   const formats=wanted.filter(x=>supported.includes(x));
+   try{barcodeDetector=new BarcodeDetector(formats.length?{formats}:undefined);}catch(e){barcodeDetector=new BarcodeDetector();}
+   scanning=true; detectBarcode();
+  }else{
+   status.textContent="Camera is active. This browser does not expose a barcode detector, so enter the number manually.";
+  }
+ }catch(e){
+  status.textContent="Camera could not start. Allow camera permission and try again.";
+  document.getElementById("cameraNote").textContent="Camera permission was not available.";
+ }
+}
+
+async function detectBarcode(){
+ if(!scanning||!barcodeDetector)return;
+ try{
+  const codes=await barcodeDetector.detect(document.getElementById("video"));
+  if(codes.length){
+   const value=codes[0].rawValue||"";
+   document.getElementById("barcodeInput").value=value;
+   lookupBarcode(); stopScanner(); return;
+  }
+ }catch(e){}
+ requestAnimationFrame(detectBarcode);
+}
+
+function stopScanner(){
+ scanning=false;
+ if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null;}
+ const s=document.getElementById("scanStatus"); if(s)s.textContent="Scanner stopped.";
+ const note=document.getElementById("cameraNote"); if(note)note.textContent="Camera is off.";
+}
+
+function getProductBarcodes(p){
+  if(Array.isArray(p.barcodes) && p.barcodes.length) return p.barcodes.map(String);
+  if(p.barcode) return [String(p.barcode)];
+  return [];
+}
+
+function getProductPhoto(p){
+  if(Array.isArray(p.photoUrls) && p.photoUrls.length) return p.photoUrls[0];
+  if(p.photoUrl) return p.photoUrl;
+  if(p.photo) return p.photo;
+  return "";
+}
+
+async function lookupBarcode(){
+  const q=document.getElementById("barcodeInput").value.trim();
+  const box=document.getElementById("barcodeResult");
+  if(!q){
+    box.innerHTML='<div class="result"><b>Enter a barcode</b><div class="meta">Type the number below the camera preview.</div></div>';
+    return;
+  }
+
+  box.innerHTML='<div class="result"><b>Searching Firebase…</b><div class="meta">Checking the barcode index and product database.</div></div>';
+
+  try{
+    // New database flow: barcode -> barcodeIndex -> productId -> products
+    const indexDoc=await db.collection("barcodeIndex").doc(q).get();
+    let p=null;
+
+    if(indexDoc.exists){
+      const productId=indexDoc.data().productId;
+      if(productId){
+        const productDoc=await db.collection("products").doc(productId).get();
+        if(productDoc.exists) p={id:productDoc.id,...productDoc.data()};
+      }
+    }
+
+    // Backward compatibility with older product records.
+    if(!p){
+      const snap=await db.collection("products").where("barcodes","array-contains",q).limit(1).get();
+      if(!snap.empty) p={id:snap.docs[0].id,...snap.docs[0].data()};
+    }
+    if(!p){
+      const oldSnap=await db.collection("products").where("barcode","==",q).limit(1).get();
+      if(!oldSnap.empty) p={id:oldSnap.docs[0].id,...oldSnap.docs[0].data()};
+    }
+
+    if(p){
+      const status=(p.halalStatus||p.status||"unknown").toLowerCase();
+      const icon=status==="halal"?"🟢":status==="haram"?"🔴":"🟡";
+      const barcodes=getProductBarcodes(p);
+      const photo=getProductPhoto(p);
+
+      box.innerHTML=`<div class="result">
+        <div class="detail-grid">
+          <div class="product-photo">${photo?`<img src="${escapeHtml(photo)}" alt="Product">`:(p.icon||"📦")}</div>
+          <div><b>${escapeHtml(p.name||"Unnamed product")}</b>
+          <div class="meta">${escapeHtml(p.brand||"")} · ${escapeHtml(p.category||"")} · ${escapeHtml(barcodes.join(", "))}</div>
+          <span class="pill ${escapeHtml(status)}">${icon} ${escapeHtml(status.toUpperCase())}</span></div>
+        </div>
+        <div class="kv" style="margin-top:15px">
+          <b>Ingredients</b><span>${escapeHtml(p.ingredients||"Not provided")}</span>
+          <b>Barcode</b><span>${escapeHtml(barcodes.join(", ")||q)}</span>
+          ${p.certification?`<b>Certification</b><span>${escapeHtml(p.certification)}</span>`:""}
+          ${p.certificateNumber?`<b>Certificate No.</b><span>${escapeHtml(p.certificateNumber)}</span>`:""}
+        </div>
+        <div class="row" style="margin-top:14px">
+          <button class="secondary" onclick="saveItem('${escapeJs(p.name||"Product")}','product')">♡ Save</button>
+          <button class="secondary" onclick="copyText('${escapeJs(q)}')">Copy barcode</button>
+          <button class="secondary" onclick="shareText('${escapeJs((p.name||"Product")+" "+q)}')">Share</button>
+        </div>
+      </div>`;
+      toast("Firebase product found ✓");
+      return;
+    }
+
+    box.innerHTML=`<div class="result"><b>Product not found</b>
+      <div class="meta">Barcode: ${escapeHtml(q)}</div>
+      <p>No matching product was found in your Firebase <b>barcodeIndex</b> or <b>products</b> collection.</p>
+      <button class="secondary" onclick="copyText('${escapeJs(q)}')">Copy barcode</button>
+    </div>`;
+  }catch(e){
+    box.innerHTML=`<div class="result"><b>Firestore read blocked</b>
+      <div class="meta">${escapeHtml(e.message||"Unknown error")}</div>
+      <p>Your Firebase connection is installed, but Firestore security rules may need to allow the app to read products and barcodeIndex.</p></div>`;
+  }
+}
+
+function productDetailHtml(p){
+  const barcodes=getProductBarcodes(p);
+  const photo=getProductPhoto(p);
+  const status=(p.halalStatus||p.status||"unknown").toLowerCase();
+  return `<div class="result">
+   <div class="detail-grid">
+    <div class="product-photo">${photo?`<img src="${escapeHtml(photo)}">`:p.icon||"📦"}</div>
+    <div><b>${escapeHtml(p.name||"Unnamed product")}</b><div class="meta">${escapeHtml(p.brand||"")} · ${escapeHtml(p.category||"")} · ${escapeHtml(barcodes.join(", "))}</div>
+    <span class="pill ${escapeHtml(status)}">${escapeHtml(status.toUpperCase())}</span></div>
+   </div>
+   <div class="kv" style="margin-top:15px"><b>Ingredients</b><span>${escapeHtml(p.ingredients||"Not provided")}</span><b>Barcode</b><span>${escapeHtml(barcodes.join(", "))}</span></div>
+   <div class="row" style="margin-top:14px">
+    <button class="secondary" onclick="saveItem('${escapeJs(p.name||"Product")}','product')">♡ Save</button>
+    <button class="secondary" onclick="copyText('${escapeJs(barcodes[0]||"")}')">Copy barcode</button>
+    <button class="secondary" onclick="shareText('${escapeJs((p.name||"Product")+" "+barcodes.join(", "))}')">Share</button>
+   </div>
+  </div>`;
+}
+
+async function renderProducts(q){
+  const list=document.getElementById("productList");
+  if(!list)return;
+  list.innerHTML='<div class="empty">Searching Firebase…</div>';
+  try{
+    const snap=await db.collection("products").limit(100).get();
+    let arr=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const s=(q||"").toLowerCase().trim();
+
+    if(s){
+      arr=arr.filter(p=>{
+        const barcodes=getProductBarcodes(p).join(" ");
+        return (`${p.name||""} ${p.brand||""} ${barcodes} ${p.category||""} ${p.ingredients||""}`).toLowerCase().includes(s);
+      });
+    }
+
+    if(!arr.length){
+      list.innerHTML='<div class="empty">No Firebase products found.</div>';
+      return;
+    }
+
+    list.innerHTML=arr.map(p=>{
+      const status=(p.halalStatus||p.status||"unknown").toLowerCase();
+      const barcodes=getProductBarcodes(p);
+      const photo=getProductPhoto(p);
+      return `<div class="list-item">
+        <div class="left">
+          <div class="thumb">${photo?`<img src="${escapeHtml(photo)}" style="width:100%;height:100%;object-fit:cover;border-radius:12px">`:(p.icon||"📦")}</div>
+          <div><b>${escapeHtml(p.name||"Unnamed product")}</b>
+          <div class="meta">${escapeHtml(p.brand||"")} · ${escapeHtml(p.category||"")} · ${escapeHtml(barcodes.join(", "))}</div>
+          <span class="pill ${escapeHtml(status)}">${escapeHtml(status.toUpperCase())}</span></div>
+        </div>
+        <div class="row"><button class="icon-btn" onclick="openFirebaseProduct('${escapeJs(p.id)}')">Open</button>
+        <button class="icon-btn favorite" onclick="saveItem('${escapeJs(p.name||"Product")}','product')">♡</button></div>
+      </div>`;
+    }).join("");
+  }catch(e){
+    list.innerHTML=`<div class="result"><b>Could not read Firebase</b>
+      <div class="meta">${escapeHtml(e.message||"Unknown error")}</div>
+      <p>Check Firestore security rules and internet access.</p></div>`;
+  }
+}
+
+async function openFirebaseProduct(id){
+  try{
+    const d=await db.collection("products").doc(id).get();
+    if(!d.exists){toast("Product no longer exists");return;}
+    const p={id:d.id,...d.data()};
+    showPage("scanner");
+    document.getElementById("barcodeInput").value=getProductBarcodes(p)[0]||"";
+    await lookupBarcode();
+  }catch(e){alert("Could not open product: "+e.message);}
+}
+
+async function testFirebaseConnection(){
+  const e=document.getElementById("firebaseStatus");
+  if(!e)return;
+  e.textContent="Testing Firebase…";
+  try{
+    const snap=await db.collection("products").limit(1).get();
+    e.textContent=`Firebase connected ✓ · ${snap.size} product record available`;
+    e.style.color="#2f6b3f";
+  }catch(err){
+    e.textContent="Firebase connected, but Firestore read is blocked by security rules.";
+    e.style.color="#a33";
+  }
+}
+
+function showProduct(barcode){
+ const p=demoProducts.find(x=>x.barcode===barcode); if(!p)return;
+ showPage("scanner"); document.getElementById("barcodeInput").value=barcode; lookupBarcode();
+}
+
+function renderPlaces(q){
+ const s=(q||"").toLowerCase();
+ const arr=places.filter(p=>(p.name+" "+p.type+" "+p.query).toLowerCase().includes(s));
+ const list=document.getElementById("placeList"); if(!list)return;
+ list.innerHTML=arr.map(p=>`<div class="list-item">
+  <div class="left"><div class="thumb">${p.icon}</div><div><b>${escapeHtml(p.name)}</b><div class="meta">${escapeHtml(p.type)}</div></div></div>
+  <div class="place-actions"><button class="icon-btn" onclick="openMapSearch('${escapeJs(p.query)}')">Map</button>
+  <button class="icon-btn favorite" onclick="saveItem('${escapeJs(p.name)}','place')">♡</button></div>
+ </div>`).join("") || '<div class="empty">No matching place category.</div>';
+}
+
+function openMapSearch(q){
+ let query=q==="mosqueCity" ? ((document.getElementById("mosqueCity")?.value||"")+" mosque Japan") : q;
+ const url="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(query);
+ window.open(url,"_blank");
+}
+
+function findNearby(kind){
+ const query=kind==="mosque"?"mosque near me":"halal restaurant near me";
+ if(!navigator.geolocation){openMapSearch(query);return;}
+ navigator.geolocation.getCurrentPosition(pos=>{
+  const url=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}&center=${pos.coords.latitude},${pos.coords.longitude}`;
+  window.open(url,"_blank");
+ },()=>openMapSearch(query),{enableHighAccuracy:false,timeout:7000});
+}
+
+function getLocation(){
+ if(!navigator.geolocation){alert("Location is not available in this browser.");return;}
+ navigator.geolocation.getCurrentPosition(p=>{
+  document.getElementById("locationText").textContent=`Location ready: ${p.coords.latitude.toFixed(3)}, ${p.coords.longitude.toFixed(3)}`;
+ },()=>alert("Location permission was not granted."));
+}
+
+function setPrayerLocation(){
+ if(!navigator.geolocation){alert("Location is not available.");return;}
+ navigator.geolocation.getCurrentPosition(async p=>{
+  try{
+   const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${p.coords.latitude}&lon=${p.coords.longitude}`);
+   const d=await r.json();
+   document.getElementById("prayerCity").value=d.address.city||d.address.town||d.address.village||"Tokyo";
+   document.getElementById("prayerCountry").value="Japan";
+   loadPrayerTimes();
+  }catch(e){alert("Could not identify the city. Please enter it manually.");}
+ },()=>alert("Location permission was not granted."));
+}
+
+async function loadPrayerTimes(){
+ const city=document.getElementById("prayerCity").value.trim()||"Tokyo";
+ const country=document.getElementById("prayerCountry").value.trim()||"Japan";
+ const status=document.getElementById("prayerStatus"),box=document.getElementById("prayerTimes");
+ status.textContent="Loading prayer times…";box.innerHTML="";
+ try{
+  const r=await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=3`);
+  const d=await r.json(),t=d?.data?.timings;
+  if(!t)throw new Error("No data");
+  [["Fajr","Fajr"],["Sunrise","Sunrise"],["Dhuhr","Dhuhr"],["Asr","Asr"],["Maghrib","Maghrib"],["Isha","Isha"]].forEach(([label,key])=>{
+   const el=document.createElement("div");el.className="time";el.innerHTML=`<b>${label}</b><span>${t[key]}</span>`;box.appendChild(el);
+  });
+  status.textContent=`Today · ${city}, ${country}`;
+ }catch(e){
+  status.textContent="Could not load live times.";
+  box.innerHTML='<div class="empty" style="grid-column:1/-1">Check internet access and try again.</div>';
+ }
+}
+
+function loadSurah(id){
+ const s=surahs[id]||surahs["1"], box=document.getElementById("quranReader"); if(!box)return;
+ box.innerHTML=`<div class="quran-card"><h3 style="margin:0;color:var(--gold)">Surah ${s.number} — ${s.name}</h3>
+ ${s.verses.map((v,i)=>`<div style="margin-top:18px"><div class="ayah">${escapeHtml(v[0])}</div><div class="translation">${escapeHtml(v[1])}</div><div class="small" style="color:#d9e5dc;margin-top:5px">Ayah ${i+1}</div></div>`).join("")}</div>`;
+}
+
+function saveCurrentSurah(){
+ const s=surahs[document.getElementById("surahSelect").value]||surahs["1"];
+ saveItem(`Surah ${s.number} — ${s.name}`,"quran");
+}
+
+function openFullQuran(){window.open("https://quran.com","_blank");}
+
+function getSaved(){try{return JSON.parse(localStorage.getItem("hfj_saved")||"[]")}catch(e){return[]}}
+
+function saveItem(name,type){
+ const a=getSaved();
+ if(!a.some(x=>x.name===name&&x.type===type)){
+  a.push({name,type,createdAt:Date.now()});localStorage.setItem("hfj_saved",JSON.stringify(a));
+  toast("Saved ✓");
+ }else toast("Already saved");
+ renderSaved();
+}
+
+function removeSaved(i){const a=getSaved();a.splice(i,1);localStorage.setItem("hfj_saved",JSON.stringify(a));renderSaved();toast("Removed");}
+
+function renderSaved(){
+ const a=getSaved(),list=document.getElementById("savedList"),empty=document.getElementById("savedEmpty"); if(!list)return;
+ empty.style.display=a.length?"none":"block";
+ list.innerHTML=a.map((x,i)=>`<div class="list-item"><div><b>${escapeHtml(x.name)}</b><div class="meta">${escapeHtml(x.type)}</div></div><button class="danger" onclick="removeSaved(${i})">Remove</button></div>`).join("");
+}
+
+let count=Number(localStorage.getItem("hfj_count")||0);
+function paintCount(){const e=document.getElementById("count");if(e)e.textContent=count}
+function increment(){count++;localStorage.setItem("hfj_count",count);paintCount();navigator.vibrate?.(25)}
+function resetCount(){count=0;localStorage.setItem("hfj_count",0);paintCount()}
+
+const azkar=["سُبْحَانَ اللَّهِ","الْحَمْدُ لِلَّهِ","اللَّهُ أَكْبَرُ","لَا إِلٰهَ إِلَّا اللَّهُ"];
+function renderAzkar(){
+ const e=document.getElementById("azkarList");if(!e)return;
+ e.innerHTML=azkar.map(z=>`<div class="list-item"><div style="direction:rtl;font-size:18px">${z}</div><button class="icon-btn favorite" onclick="saveItem('${escapeJs(z)}','azkar')">♡</button></div>`).join("");
+}
+
+function clearLocalData(){
+ if(confirm("Clear saved items and Tasbih count from this device?")){
+  localStorage.removeItem("hfj_saved");localStorage.removeItem("hfj_count");count=0;paintCount();renderSaved();toast("Local data cleared");
+ }
+}
+
+function openLanguage(){document.getElementById("languageModal").classList.add("show")}
+function closeLanguage(){document.getElementById("languageModal").classList.remove("show")}
+
+function setLanguage(lang){
+ localStorage.setItem("hfj_lang",lang);
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"||lang==="ps"?"rtl":"ltr";
+ const t=translations[lang]||translations.en;
+ document.querySelectorAll('.nav button').forEach(b=>{
+  const key=b.dataset.page;
+  const span=b.querySelector("span");
+  if(span&&t[key])span.textContent=t[key];
+ });
+ closeLanguage();toast("Language setting saved ✓");
+}
+
+function restoreLanguage(){
+ const lang=localStorage.getItem("hfj_lang")||"en";
+ document.getElementById("languageSelect").value=lang;
+ setLanguage(lang);
+}
+
+async function shareText(text){
+ try{
+  if(navigator.share){await navigator.share({title:"Halal Finder Japan",text});}
+  else await navigator.clipboard.writeText(text),toast("Copied to clipboard ✓");
+ }catch(e){}
+}
+
+async function copyText(text){
+ try{await navigator.clipboard.writeText(text);toast("Copied ✓");}
+ catch(e){alert(text);}
+}
+
+function toast(message){
+ const e=document.getElementById("toast");if(!e)return;
+ e.textContent=message;e.classList.add("show");clearTimeout(window._toastTimer);
+ window._toastTimer=setTimeout(()=>e.classList.remove("show"),1800);
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
+function escapeJs(s){return String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
+
+paintCount();
+renderSaved();
+renderProducts("");
+renderPlaces("");
+renderAzkar();
+restoreLanguage();
+loadSurah("1");
+</script>
+
+<div id="toast" class="toast"></div>
+</body>
+</html>
